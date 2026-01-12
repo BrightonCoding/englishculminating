@@ -34,7 +34,7 @@ export default function Footer({ isActive = false, onNext, onPrevious }: FooterP
             Course Text Connection: <em>Portraits from a Fire</em> (2021) — A Tsilhqot&apos;in film by Trevor Mack
           </p>
           <p className="text-[var(--text-muted)] text-xs mt-2">
-            Daniel Heath Justice Question: &ldquo;How do we learn to be human?&rdquo;
+            Daniel Heath Justice Question: ;How do we learn to be human?
           </p>
         </div>
       </motion.div>
