@@ -37,7 +37,7 @@ export default function SlideContainer({ children, totalSlides }: SlideContainer
   };
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden">
+    <div className="relative w-screen h-screen overflow-hidden bg-[#0f0e0c]">
       {/* Slides Container */}
       <div
         className="flex transition-transform ease-in-out"
@@ -71,7 +71,7 @@ export default function SlideContainer({ children, totalSlides }: SlideContainer
       {currentSlide > 0 && (
         <button
           onClick={goToPrevious}
-          className="fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-[var(--background)]/60 backdrop-blur-sm border border-[var(--border-subtle)] flex items-center justify-center text-[var(--accent-warm)] opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 group"
+          className="fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#0f0e0c]/80 backdrop-blur-sm border border-[var(--border-subtle)] flex items-center justify-center text-[var(--accent-warm)] opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 group"
           aria-label="Previous slide"
         >
           <svg
@@ -93,7 +93,7 @@ export default function SlideContainer({ children, totalSlides }: SlideContainer
       {currentSlide < totalSlides - 1 && (
         <button
           onClick={goToNext}
-          className="fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-[var(--background)]/60 backdrop-blur-sm border border-[var(--border-subtle)] flex items-center justify-center text-[var(--accent-warm)] opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 group"
+          className="fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#0f0e0c]/80 backdrop-blur-sm border border-[var(--border-subtle)] flex items-center justify-center text-[var(--accent-warm)] opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-110 group"
           aria-label="Next slide"
         >
           <svg

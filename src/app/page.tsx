@@ -1,6 +1,8 @@
 "use client";
 
-import Hero from "@/components/Hero";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import EarthScroll from "@/components/EarthScroll";
 import Phase from "@/components/Phase";
 import Reflection from "@/components/Reflection";
 import Footer from "@/components/Footer";
@@ -124,11 +126,24 @@ const phasesData = [
 ];
 
 export default function Home() {
-  // Total slides: Hero (1) + Phases (11) + Reflection (1) + Footer (1) = 14
-  const totalSlides = 1 + phasesData.length + 1 + 1;
+  const [showMainContent, setShowMainContent] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Total slides: Phases (11) + Reflection (1) + Footer (1) = 13
+  const totalSlides = phasesData.length + 1 + 1;
+
+  const handleScrollComplete = () => {
+    setIsTransitioning(true);
+    // Wait for transition animation
+    setTimeout(() => {
+      setShowMainContent(true);
+      setIsTransitioning(false);
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }, 1200);
+  };
 
   const slides = [
-    <Hero key="hero" />,
     ...phasesData.map((phase) => (
       <Phase
         key={phase.number}
@@ -144,10 +159,72 @@ export default function Home() {
   ];
 
   return (
-    <main className="w-screen h-screen">
-      <SlideContainer totalSlides={totalSlides}>
-        {slides}
-      </SlideContainer>
-      </main>
+    <main className="w-full">
+      {/* Cinematic Transition Overlay */}
+      <AnimatePresence>
+        {isTransitioning && (
+          <motion.div
+            className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Animated rings */}
+            <motion.div
+              className="absolute w-40 h-40 border border-[var(--accent-warm)]/20 rounded-full"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: [0, 3, 4], opacity: [0, 0.5, 0] }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+            />
+            <motion.div
+              className="absolute w-40 h-40 border border-[var(--accent-warm)]/30 rounded-full"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: [0, 2, 3], opacity: [0, 0.6, 0] }}
+              transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
+            />
+            <motion.div
+              className="absolute w-40 h-40 border border-[var(--accent-warm)]/40 rounded-full"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: [0, 1.5, 2], opacity: [0, 0.8, 0] }}
+              transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+            />
+            
+            {/* Center text */}
+            <motion.div
+              className="text-center z-10"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: [0, 1, 0], scale: [0.8, 1, 0.9] }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+            >
+              <span className="text-[var(--accent-warm)] text-sm tracking-[0.4em] uppercase">
+                Phase I
+              </span>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Landing Page - Scrollytelling */}
+      {!showMainContent && (
+        <EarthScroll onScrollComplete={handleScrollComplete} />
+      )}
+      
+      {/* Main Content - Photo Essay */}
+      <AnimatePresence>
+        {showMainContent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="w-screen h-screen"
+          >
+            <SlideContainer totalSlides={totalSlides}>
+              {slides}
+            </SlideContainer>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </main>
   );
 }
